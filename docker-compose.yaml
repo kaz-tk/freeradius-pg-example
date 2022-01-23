@@ -1,0 +1,18 @@
+version: '3.0'
+services:
+  radius:
+    image: freeradius/freeradius-server
+    network_mode: host
+    restart: always
+    volumes:
+     - ./radius/sql:/etc/raddb/mods-available/sql
+  db:
+    image: postgres
+    restart: always
+    volumes:
+     - ./db/sql:/sql
+     - ./db/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
+    environment:
+      POSTGRES_PASSWORD: example
+
+    network_mode: host
